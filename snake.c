@@ -1,24 +1,22 @@
-// C function showing how to do time delay
 #include <stdio.h>
-// To use time library of C
-#include <time.h>
-  
-void delay(int number_of_seconds)
-{
-	// Converting time into milli_seconds
-	int milli_seconds = 1000 * number_of_seconds;
-  
-	// Storing start time
-	clock_t start_time = clock();
-  
-	// looping till required time is not achieved
-	while (clock() < start_time + milli_seconds)
-	{
-        	;
-	}
-}  
+
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
+
+void delay(int seconds)
+{   // Pretty crossplatform, both ALL POSIX compliant systems AND Windows
+    #ifdef _WIN32
+        Sleep(1000 * seconds);
+    #else
+        sleep(seconds);
+    #endif
+}
+ 
 // Driver code to test above function
-int main()
+int main(int argc, char **argv)
 {
 	int i;
 	for (i = 0; i < 10; i++)
