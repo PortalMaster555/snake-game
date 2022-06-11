@@ -18,8 +18,8 @@ char appleChar = '@';
 
 bool gameLoop = false;
 
-int **snakePos;
-int *applePos;
+int snakePos[100][2];
+int applePos[2];
 
 //TIME FUNCTION
 void delay(float seconds)
@@ -52,6 +52,9 @@ void printGrid(int screenX, int screenY)
 //
 int main(int argc, char **argv)
 {
+	applePos[0] = screenX / 2;
+	applePos[1] = screenY / 2;
+
 	gameLoop = true;
 	//while(gameLoop)
 	//{
@@ -59,6 +62,7 @@ int main(int argc, char **argv)
         	delay(1.0 / framesPerSecond);
 	//}
 	
+	
+
 	return 0;
 }
-
