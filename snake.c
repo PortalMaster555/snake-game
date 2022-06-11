@@ -6,24 +6,26 @@
     #include <unistd.h>
 #endif
 
-void delay(int seconds)
+float framesPerSecond = 60;
+
+void delay(float seconds)
 {   // Pretty crossplatform, both ALL POSIX compliant systems AND Windows
-    #ifdef _WIN32
-        Sleep(1000 * seconds);
-    #else
-        sleep(seconds);
-    #endif
+    int milliSeconds = 1000 * seconds;
+	#ifdef _WIN32
+        	Sleep(milliSeconds);
+    	#else
+        	usleep(1000 * milliSeconds); //usleep uses microseconds
+	#endif
 }
  
-// Driver code to test above function
 int main(int argc, char **argv)
 {
 	int i;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 360; i++)
 	{
-        	// delay of one second
-        	delay(1);
-        	printf("%d seconds have passed\n", i + 1);
+		printf("%f: ", 1.0 / framesPerSecond);
+        	delay(1.0 / framesPerSecond);
+        	printf("Frame %d\n", i + 1);
     	}
     return 0;
 }
