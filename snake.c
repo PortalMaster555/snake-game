@@ -8,8 +8,8 @@
 #endif
 
 float framesPerSecond = 60;
-int screenX = 10;
-int screenY = 10;
+int screenX = 11;
+int screenY = 11;
 
 char bgChar = '.';
 char snakeHeadChar = 'O';
@@ -19,7 +19,7 @@ char appleChar = '@';
 bool gameLoop = false;
 
 int snakePos[100][2];
-int applePos[2] = {4, 4};
+int applePos[2] = {5, 5};
 
 //TIME FUNCTION
 void delay(float seconds)
@@ -40,13 +40,17 @@ void printGrid(int screenX, int screenY, int snakePos[100][2], int applePos[2])
 	{
 		for(int x = 0; x < screenX; x++)
 		{
-			if(x != applePos[0] || y != applePos[1])
+			if(x == applePos[0] && y == applePos[1])
 			{
-				printf("%c ", bgChar);
+				printf("%c ", appleChar);
+			}
+			else if(x == snakePos[0][0] && y == snakePos[0][1])
+			{
+				printf("%c ", snakeHeadChar);
 			}
 			else
 			{
-				printf("%c ", appleChar);
+				printf("%c ", bgChar);
 			}
 		}
 		printf("\n");
@@ -58,8 +62,8 @@ void printGrid(int screenX, int screenY, int snakePos[100][2], int applePos[2])
 //
 int main(int argc, char **argv)
 {
-	//applePos[0] = screenX / 2;
-	//applePos[1] = screenY / 2;
+	snakePos[0][0] = 3;
+	snakePos[0][1] = 6;
 
 	gameLoop = true;
 	//while(gameLoop)
