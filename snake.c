@@ -4,16 +4,16 @@
 #include <stdlib.h>
 #include <time.h>
 
-#ifdef _WIN32
-	#include <windows.h>
-#else
-	#include <unistd.h>
-#endif
+//#ifdef _WIN32
+//  	#include <windows.h>
+//#else
+//  	#include <unistd.h>
+//#endif
 
 //FUNCTIONS
 
 void printGrid(int applePos[2], int (*snakePos)[2],int dims[2], char chars[4])
-{ // . @ O o
+{ //chars are . @ O o
 	for(int y = 0; y < dims[1]; y++)
 	{
 		for(int x = 0; x < dims[0]; x++)
@@ -77,7 +77,7 @@ void printCurrentSnake(int (*snakePos)[2], int *p)
 int main(int *argc, char **argv)
 {
 	int screenSize[2] = {11, 11};
-	char charArray[4] = {'.', '@', 'O', 'o'};
+	char charArray[4] = {'+', '@', 'O', 'o'};
 
 	int currentLength = 1;
 	int *lengthPointer;
