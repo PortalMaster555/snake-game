@@ -42,9 +42,21 @@ int main(int *argc, char **argv)
 	{
 		for(int s = 0; s < currentLength; s++)
 		{
-			printf("Pos. %d: (%d, %d)", s, snakePos[s][0], snakePos[s][1]);
+			printf("Pos. %d: (%d, %d)\n", s, snakePos[s][0], snakePos[s][1]);
 		}
 		printf("\n");
+		currentLength++;
+		printf("Current Length used in next realloc: %d\n", currentLength);
+		snakePos = realloc(snakePos, currentLength);
+		if(snakePos == NULL)
+		{
+			printf("Narupo GAH");
+		}
+		else
+		{
+		snakePos[currentLength - 1][0] = currentLength;
+		snakePos[currentLength - 1][1] = currentLength;
+		}
 	}
 	return 0;
 }
