@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-//#ifdef _WIN32
-//  	#include <windows.h>
-//#else
-//  	#include <unistd.h>
-//#endif
+#ifdef _WIN32
+  	#include <windows.h>
+#else
+  	#include <unistd.h>
+#endif
 
 //FUNCTIONS
 
@@ -66,6 +66,18 @@ void printCurrentSnake(int (*snakePos)[2], int *p)
 	}
 }
 
+void delayUntilNextFrame(clock_t frameStart, int framesPerSecond)
+{
+	float timePerFrame = (1.0 / (float)framesPerSecond);
+	int milliDelay = (int)(timePerFrame * 1000);
+	#ifdef _WIN32
+		Sleep(milliDelay);
+	#else
+			usleep(1000 * milliDelay); //usleep uses microseconds
+	#endif
+}
+
+
 //VARIABLES
 
 
@@ -75,7 +87,11 @@ void printCurrentSnake(int (*snakePos)[2], int *p)
 //
 
 int main(int *argc, char **argv)
-{
+{	
+	int framesPerSecond = 1;
+
+	bool gameLoopActive = true;
+
 	int screenSize[2] = {11, 11};
 	char charArray[4] = {'+', '@', 'O', 'o'};
 
@@ -89,11 +105,17 @@ int main(int *argc, char **argv)
 	snakePos[0][0] = 1;
 	snakePos[0][1] = 1;
 	
-	printGrid(applePos, snakePos, screenSize, charArray);
-	
-	//growSnake(snakePos, lengthPointer);
-	//printCurrentSnake(snakePos, lengthPointer);
-	
+	while(gameLoopActive)
+	{
+		clock_t frameStart = clock();
+		
+		printGrid(applePos, snakePos, screenSize, charArray);
+		printf("\n");
+		delayUntilNextFrame(frameStart, framesPerSecond);
+
+		//growSnake(snakePos, lengthPointer);
+		//printCurrentSnake(snakePos, lengthPointer);
+	}
 	free(snakePos);
 	return 0;
 }
