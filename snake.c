@@ -12,7 +12,7 @@
 
 //FUNCTIONS
 
-void printGrid(int applePos[2], int (*snakePos)[2],int dims[2], char chars[4])
+void printGrid(int applePos[2], int (*snakePos)[2], int dims[2], char chars[4])
 { //chars are . @ O o
 	for(int y = 0; y < dims[1]; y++)
 	{
@@ -77,10 +77,10 @@ void delayUntilNextFrame(clock_t frameStart, int framesPerSecond)
 	#endif
 }
 
-
-//VARIABLES
-
-
+void updateGameState()
+{
+	
+}
 
 //
 //BEGIN PROGRAM
@@ -92,25 +92,29 @@ int main(int *argc, char **argv)
 
 	bool gameLoopActive = true;
 
-	int screenSize[2] = {11, 11};
+	int screenSize[2] = {11, 11}; //magic number
 	char charArray[4] = {'+', '@', 'O', 'o'};
 
 	int currentLength = 1;
 	int *lengthPointer;
 	lengthPointer = &currentLength;
+
 	int (*snakePos)[2];
-	int applePos[2] = {5, 5}; //magic number
+	int applePos[2] = {3, 3}; //magic number
 
 	snakePos = calloc(1, 2 * sizeof(int));
-	snakePos[0][0] = 1;
-	snakePos[0][1] = 1;
+	snakePos[0][0] = 5; //maaagic
+	snakePos[0][1] = 5; //nuuumbers
 	
 	while(gameLoopActive)
 	{
 		clock_t frameStart = clock();
 		
+		updateGameState();
+		
 		printGrid(applePos, snakePos, screenSize, charArray);
 		printf("\n");
+		
 		delayUntilNextFrame(frameStart, framesPerSecond);
 
 		//growSnake(snakePos, lengthPointer);
