@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ncurses.h>
 
 #ifdef _WIN32
   	#include <windows.h>
@@ -13,49 +14,22 @@
 //FUNCTIONS
 
 void printGrid(int applePos[2], int (*snakePos)[2], int dims[2], char chars[4])
-{ //chars are . @ O o
+{ //chars are + @ O o
 	for(int y = 0; y < dims[1]; y++)
 	{
 		for(int x = 0; x < dims[0]; x++)
 		{
-				if(x == applePos[0] && y == applePos[1])
-				{
-					printf("%c ", chars[1]);
-				}
-				else if(x == snakePos[0][0] && y == snakePos[0][1])
-				{
-					printf("%c ", chars[2]);
-				}
-				else //nested ifs are disgusting
-				{	
-					bool isPrinted = false;
-					for(int s = 0; s < sizeof(snakePos) / 2; s++)
-					{
-						if(x == snakePos[s][0] && y == snakePos[s][1] && !isPrinted)
-						{
-							
-							printf("%c ", chars[3]);
-							isPrinted = true;
-						}
-						else if(!isPrinted)
-						{
-							printf("%c ", chars[0]);
-							isPrinted = true;
-						}
-					}
-				}
+			addch(chars[0]);
+			addch(' ');
 		}
-		printf("\n");
+		addch('\n');
 	}
+	refresh();
 }
 
 void growSnake(int (*snakePos)[2], int *p)
 {
-		printf("\n");
-		*p = *p + 1;
-		snakePos = realloc(snakePos, *p * 2 * sizeof(int));
-		snakePos[*p - 1][0] = *p;
-		snakePos[*p - 1][1] = *p;
+
 }
 
 void printCurrentSnake(int (*snakePos)[2], int *p)
@@ -77,9 +51,13 @@ void delayUntilNextFrame(clock_t frameStart, int framesPerSecond)
 	#endif
 }
 
-void updateGameState()
+void updateGameState(bool isFirstRun)
 {
-	
+	if(isFirstRun)
+	{
+		//continue to execute
+		isFirstRun = false;
+	}
 }
 
 //
@@ -91,6 +69,7 @@ int main(int *argc, char **argv)
 	int framesPerSecond = 1;
 
 	bool gameLoopActive = true;
+	bool isFirstRun = true;
 
 	int screenSize[2] = {11, 11}; //magic number
 	char charArray[4] = {'+', '@', 'O', 'o'};
@@ -110,16 +89,24 @@ int main(int *argc, char **argv)
 	{
 		clock_t frameStart = clock();
 		
-		updateGameState();
+		initscr(); //start curses mode
+		cbreak(); //line buffering disabled, also allows interrupts
+		keypad(stdscr, TRUE);  //get the fun keys like F1
+		noecho(); //do not echo when getch() is called
+
+		updateGameState(isFirstRun);
 		
 		printGrid(applePos, snakePos, screenSize, charArray);
-		printf("\n");
-		
 		delayUntilNextFrame(frameStart, framesPerSecond);
-
+		
+		//printCurrentSnake(snakePos, lengthPointer);
 		//growSnake(snakePos, lengthPointer);
 		//printCurrentSnake(snakePos, lengthPointer);
+		//printf("~\n");
+		clear();
+		refresh();
 	}
+	endwin();
 	free(snakePos);
 	return 0;
 }
