@@ -13,7 +13,7 @@
 
 //FUNCTIONS
 
-void printGrid(int applePos[2], int (*snakePos)[2], int dims[2], char chars[4])
+void printGrid(int applePos[2], int (*snakePos)[2], int dims[2], char chars[4], int *lengthPointer)
 { //chars are + @ O o
 	for(int y = 0; y < dims[1]; y++)
 	{
@@ -24,15 +24,23 @@ void printGrid(int applePos[2], int (*snakePos)[2], int dims[2], char chars[4])
 		}
 		addch('\n');
 	}
+	//NOTE: y, x, char is the order for mvaddch()
+	mvaddch(applePos[1], applePos[0] * 2, chars[1]); //prints apple, offset by spaces in columns
 	
-	mvaddch(applePos[1], applePos[0] * 2, chars[1]); //prints apple, offset by spaces in columns. (y, x, char)
+	mvaddch(snakePos[0][1], snakePos[0][0] * 2, chars[2]); //prints snake head, offset by spaces in columns
+
+	for(int s = 1; s < *lengthPointer; s++) //annoyingly, I need to start the loop at 1 to make it more concise
+	{
+		mvaddch(snakePos[s][1], snakePos[s][0] * 2, chars[3]);
+	}
+
 	mvaddch(dims[1] - 1, dims[0] * 2 - 1, '\n'); //moves cursor to bottom of screen
 	refresh();
 }
 
 void growSnake(int (*snakePos)[2], int *p)
 {
-	
+	//remember to put the apple where the snake is NOT (iterate over all snake[s])
 }
 
 void printCurrentSnake(int (*snakePos)[2], int *p)
@@ -88,6 +96,7 @@ int main(int *argc, char **argv)
 	snakePos[0][0] = 5; //maaagic
 	snakePos[0][1] = 5; //nuuumbers
 	
+	
 	while(gameLoopActive)
 	{
 		clock_t frameStart = clock();
@@ -99,7 +108,7 @@ int main(int *argc, char **argv)
 
 		updateGameState(isFirstRun);
 		
-		printGrid(applePos, snakePos, screenSize, charArray);
+		printGrid(applePos, snakePos, screenSize, charArray, lengthPointer);
 		delayUntilNextFrame(frameStart, framesPerSecond);
 		
 		//printCurrentSnake(snakePos, lengthPointer);
