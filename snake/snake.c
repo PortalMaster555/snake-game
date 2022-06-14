@@ -104,10 +104,14 @@ void writeDebugMenu(bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], i
 {
 	if(*isDebugEnabled)
 	{
-		mvprintw(30, 5, "A:(%d, %d)", applePos[0], applePos[1]);
+		int maxX, maxY;
+		getmaxyx(stdscr, maxY, maxX);
+		maxY--;
+		maxX--;
+		mvprintw(maxY - 1, 0, "A:(%d, %d)", applePos[0], applePos[1]); //1 FROM BOTTOM
 		for(int i = 0; i < *lengthPointer; i++)
 		{	
-			mvprintw(31, 5, "%d:(%d, %d) ", i, snakePos[i][0], snakePos[i][1]);
+			mvprintw(maxY, 0, "%d:(%d, %d) ", i, snakePos[i][0], snakePos[i][1]); //BOTTOM
 		}
 		refresh();
 	}
