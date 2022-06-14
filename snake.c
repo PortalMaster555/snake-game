@@ -24,12 +24,15 @@ void printGrid(int applePos[2], int (*snakePos)[2], int dims[2], char chars[4])
 		}
 		addch('\n');
 	}
+	
+	mvaddch(applePos[1], applePos[0] * 2, chars[1]); //prints apple, offset by spaces in columns. (y, x, char)
+	mvaddch(dims[1] - 1, dims[0] * 2 - 1, '\n'); //moves cursor to bottom of screen
 	refresh();
 }
 
 void growSnake(int (*snakePos)[2], int *p)
 {
-
+	
 }
 
 void printCurrentSnake(int (*snakePos)[2], int *p)
