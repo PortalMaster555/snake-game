@@ -13,14 +13,30 @@
 
 //FUNCTIONS
 
+void placeApple(int applePos[2], int (*snakePos)[2], int *lengthPtr, int screenSize[2])
+	//this will continuously execute until it is able to place the apple on a different spot than the snake.
+{
+	applePos[0] = rand() % screenSize[0];
+	applePos[1] = rand() % screenSize[1];
+
+	for(int i = 0; i < *lengthPtr; i++){
+		while (memcmp(applePos, snakePos[i], 8) == 0) //applePos size guaranteed to be 8 bytes
+		{
+			applePos[0] = rand() % screenSize[0];
+			applePos[1] = rand() % screenSize[1];
+		}
+	}
+}
+
+//
+
 void printGrid(int applePos[2], int (*snakePos)[2], int dims[2], char chars[4], int *lengthPointer)
 { //chars are + @ O o
 	for(int y = 0; y < dims[1]; y++)
 	{
 		for(int x = 0; x < dims[0]; x++)
 		{
-			addch(chars[0]);
-			addch(' ');
+			mvaddch(y, x * 2, chars[0]);
 		}
 		addch('\n');
 	}
@@ -38,10 +54,7 @@ void printGrid(int applePos[2], int (*snakePos)[2], int dims[2], char chars[4], 
 	refresh();
 }
 
-void growSnake(int (*snakePos)[2], int *p)
-{
-	//remember to put the apple where the snake is NOT (iterate over all snake[s])
-}
+//
 
 void printCurrentSnake(int (*snakePos)[2], int *p)
 {
@@ -50,6 +63,8 @@ void printCurrentSnake(int (*snakePos)[2], int *p)
 		printf("Pos. %d: (%d, %d)\n", s, snakePos[s][0], snakePos[s][1]);
 	}
 }
+
+//
 
 void delayUntilNextFrame(clock_t frameStart, int framesPerSecond)
 {
@@ -61,6 +76,8 @@ void delayUntilNextFrame(clock_t frameStart, int framesPerSecond)
 			usleep(1000 * milliDelay); //usleep uses microseconds
 	#endif
 }
+
+//
 
 void updateGameState(bool isFirstRun)
 {
@@ -76,48 +93,52 @@ void updateGameState(bool isFirstRun)
 //
 
 int main(int *argc, char **argv)
-{	
+{
+	srand(time(NULL)); //init random seed based on UNIX time
+
 	int framesPerSecond = 1;
 
 	bool gameLoopActive = true;
 	bool isFirstRun = true;
 
-	int screenSize[2] = {11, 11}; //magic number
+	int screenSize[2] = {2, 2};
+
 	char charArray[4] = {'+', '@', 'O', 'o'};
 
 	int currentLength = 1;
 	int *lengthPointer;
 	lengthPointer = &currentLength;
 
-	int (*snakePos)[2];
-	int applePos[2] = {3, 3}; //magic number
 
+	int (*snakePos)[2];
+	
 	snakePos = calloc(1, 2 * sizeof(int));
-	snakePos[0][0] = 5; //maaagic
-	snakePos[0][1] = 5; //nuuumbers
+	snakePos[0][0] = 0;
+	snakePos[0][1] = 0;
 	
+	int applePos[2] = {0, 0};
 	
+
+	initscr(); //activate curses mode
+	cbreak(); //line buffering disabled, also allows interrupts
+	keypad(stdscr, TRUE);  //get the fun keys like F1
+	noecho(); //do not echo when getch() is called
+
+
+	placeApple(applePos, snakePos, lengthPointer, screenSize);
 	while(gameLoopActive)
 	{
 		clock_t frameStart = clock();
-		
-		initscr(); //start curses mode
-		cbreak(); //line buffering disabled, also allows interrupts
-		keypad(stdscr, TRUE);  //get the fun keys like F1
-		noecho(); //do not echo when getch() is called
+		placeApple(applePos, snakePos, lengthPointer, screenSize);
 
 		updateGameState(isFirstRun);
 		
-	//	printGrid(applePos, snakePos, screenSize, charArray, lengthPointer);
-	
-		int random = rand();
-		printw("%d", random);
+		printGrid(applePos, snakePos, screenSize, charArray, lengthPointer);
+		
+		printw("%d,%d  %d,%d", applePos[0], applePos[1], snakePos[0][0], snakePos[0][1]);
 		refresh();
-
 		delayUntilNextFrame(frameStart, framesPerSecond);
 		
-		//printCurrentSnake(snakePos, lengthPointer);
-		//growSnake(snakePos, lengthPointer);
 		//printCurrentSnake(snakePos, lengthPointer);
 		//printf("~\n");
 		clear();
