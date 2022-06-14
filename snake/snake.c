@@ -88,6 +88,32 @@ void updateGameState(bool isFirstRun)
 	}
 }
 
+void writeDebugMenu(); //compiler has a heart attack because of implicit declaration in checkDebugKey()
+
+void checkDebugKey(int debugKey, bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], int *lengthPointer)
+{
+	int ch = getch();
+	if(ch == debugKey)
+	{
+		*isDebugEnabled = !*isDebugEnabled;
+	}
+	writeDebugMenu(isDebugEnabled, applePos, snakePos, lengthPointer);
+}
+
+void writeDebugMenu(bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], int *lengthPointer)
+{
+	if(*isDebugEnabled)
+	{
+		mvprintw(30, 5, "A:(%d, %d)", applePos[0], applePos[1]);
+		for(int i = 0; i < *lengthPointer; i++)
+		{	
+			mvprintw(31, 5, "%d:(%d, %d) ", i, snakePos[i][0], snakePos[i][1]);
+		}
+		refresh();
+	}
+	flushinp(); //flush unprocessed inputs from repeated keystrokes
+}
+
 //
 //BEGIN PROGRAM
 //
@@ -101,7 +127,7 @@ int main(int *argc, char **argv)
 	bool gameLoopActive = true;
 	bool isFirstRun = true;
 
-	int screenSize[2] = {2, 2};
+	int screenSize[2] = {11, 11};
 
 	char charArray[4] = {'+', '@', 'O', 'o'};
 
@@ -113,17 +139,21 @@ int main(int *argc, char **argv)
 	int (*snakePos)[2];
 	
 	snakePos = calloc(1, 2 * sizeof(int));
-	snakePos[0][0] = 0;
-	snakePos[0][1] = 0;
+	snakePos[0][0] = screenSize[0] / 2; //integer division makes finding
+	snakePos[0][1] = screenSize[1] / 2; //the center convenient
 	
 	int applePos[2] = {0, 0};
 	
+	//DEBUG
+	bool isDebugEnabled = false;
+	bool *debugStatPoint = &isDebugEnabled;
+	int debugKey = KEY_F(3);
 
 	initscr(); //activate curses mode
 	cbreak(); //line buffering disabled, also allows interrupts
 	keypad(stdscr, TRUE);  //get the fun keys like F1
 	noecho(); //do not echo when getch() is called
-
+	nodelay(stdscr, TRUE);
 
 	placeApple(applePos, snakePos, lengthPointer, screenSize);
 	while(gameLoopActive)
@@ -134,9 +164,9 @@ int main(int *argc, char **argv)
 		updateGameState(isFirstRun);
 		
 		printGrid(applePos, snakePos, screenSize, charArray, lengthPointer);
+	
+		checkDebugKey(debugKey, debugStatPoint, applePos, snakePos, lengthPointer);
 		
-		printw("%d,%d  %d,%d", applePos[0], applePos[1], snakePos[0][0], snakePos[0][1]);
-		refresh();
 		delayUntilNextFrame(frameStart, framesPerSecond);
 		
 		//printCurrentSnake(snakePos, lengthPointer);
