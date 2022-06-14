@@ -108,7 +108,12 @@ int main(int *argc, char **argv)
 
 		updateGameState(isFirstRun);
 		
-		printGrid(applePos, snakePos, screenSize, charArray, lengthPointer);
+	//	printGrid(applePos, snakePos, screenSize, charArray, lengthPointer);
+	
+		int random = rand();
+		printw("%d", random);
+		refresh();
+
 		delayUntilNextFrame(frameStart, framesPerSecond);
 		
 		//printCurrentSnake(snakePos, lengthPointer);
