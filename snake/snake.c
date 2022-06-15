@@ -89,7 +89,7 @@ void checkDebugKey(int debugKey, bool *isDebugEnabled)
 	}
 }
 
-void writeDebugMenu(bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], int *lengthPointer, char *direction)
+void writeDebugMenu(bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], int *lengthPointer, int snakeDir[2])
 {
 	if(*isDebugEnabled)
 	{
@@ -98,7 +98,7 @@ void writeDebugMenu(bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], i
 		maxY--;
 		maxX--;
 
-		mvprintw(maxY - 3, 0, "Current Direction: %s", direction);
+		mvprintw(maxY - 3, 0, "Current Direction: (%d, %d)", snakeDir[0], snakeDir[1]);
 
 		mvprintw(maxY - 2, 0, "A:(%d, %d)", applePos[0], applePos[1]);
 		for(int i = 0; i < *lengthPointer; i++)
@@ -112,32 +112,28 @@ void writeDebugMenu(bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], i
 	}
 }
 
-char* setMovement(int snakeDir[2], int controls[8])
-{ // L R S , D U S
+void setMovement(int snakeDir[2], int controls[8])
+{ // L R S , U D S
 	int key = getch();
 	if(key == controls[0] || key == controls[4])
 	{
 		snakeDir[0] = 0;
-		snakeDir[1] = 1;
-		return "UP   ";
+		snakeDir[1] = -1;
 	}
 	else if(key == controls[1] || key == controls[5])
 	{
 		snakeDir[0] = -1;
 		snakeDir[1] = 0;
-		return "LEFT ";
 	}
 	else if(key == controls[2] || key == controls[6])
 	{
 		snakeDir[0] = 0;
-		snakeDir[1] = -1;
-		return "DOWN ";
+		snakeDir[1] = 1;
 	}
 	else if(key == controls[3] || key == controls[7])
 	{
 		snakeDir[0] = 1;
 		snakeDir[1] = 0;
-		return "RIGHT";
 	}
 }
 
@@ -185,7 +181,7 @@ int main(int *argc, char **argv)
 	placeApple(applePos, snakePos, lengthPointer, screenSize);
 	
 	int snakeDir[2] = {-1, 0}; // X: -1 = LEFT, 1 = RIGHT, 0 = STATIONARY
-								// Y: -1 = DOWN, 1 = UP, 0 = STATIONARY
+								// Y: -1 = UP, 1 = DOWN, 0 = STATIONARY
 
 	int controls[8] = {'w', 'a', 's', 'd', KEY_UP, KEY_LEFT, KEY_DOWN, KEY_RIGHT};
 
@@ -196,13 +192,10 @@ int main(int *argc, char **argv)
 		updateGameState(isFirstRun);
 		
 		printGrid(applePos, snakePos, screenSize, charArray, lengthPointer);
-		char *direction = calloc(1, 5 * sizeof(char));
-	//	direction = setMovement(snakeDir, controls);
 
 		checkDebugKey(debugKey, debugStatusPointer);
-		writeDebugMenu(debugStatusPointer, applePos, snakePos, lengthPointer, direction);
+		writeDebugMenu(debugStatusPointer, applePos, snakePos, lengthPointer, snakeDir);
 		
-		free(direction);
 
 		flushinp(); //flush unprocessed inputs from repeated keystrokes
 		delayUntilNextFrame(frameStart, framesPerSecond);
