@@ -56,16 +56,6 @@ void printGrid(int applePos[2], int (*snakePos)[2], int dims[2], char chars[4], 
 
 //
 
-void printCurrentSnake(int (*snakePos)[2], int *p)
-{
-	for(int s = 0; s < *p; s++)
-	{
-		printf("Pos. %d: (%d, %d)\n", s, snakePos[s][0], snakePos[s][1]);
-	}
-}
-
-//
-
 void delayUntilNextFrame(clock_t frameStart, int framesPerSecond)
 {
 	float timePerFrame = (1.0 / (float)framesPerSecond);
@@ -90,17 +80,16 @@ void updateGameState(bool isFirstRun)
 
 void writeDebugMenu(); //compiler has a heart attack because of implicit declaration in checkDebugKey()
 
-void checkDebugKey(int debugKey, bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], int *lengthPointer)
+void checkDebugKey(int debugKey, bool *isDebugEnabled)
 {
 	int ch = getch();
 	if(ch == debugKey)
 	{
 		*isDebugEnabled = !*isDebugEnabled;
 	}
-	writeDebugMenu(isDebugEnabled, applePos, snakePos, lengthPointer);
 }
 
-void writeDebugMenu(bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], int *lengthPointer)
+void writeDebugMenu(bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], int *lengthPointer, char *direction)
 {
 	if(*isDebugEnabled)
 	{
@@ -108,14 +97,48 @@ void writeDebugMenu(bool *isDebugEnabled, int applePos[2], int (*snakePos)[2], i
 		getmaxyx(stdscr, maxY, maxX);
 		maxY--;
 		maxX--;
-		mvprintw(maxY - 1, 0, "A:(%d, %d)", applePos[0], applePos[1]); //1 FROM BOTTOM
+
+		mvprintw(maxY - 3, 0, "Current Direction: %s", direction);
+
+		mvprintw(maxY - 2, 0, "A:(%d, %d)", applePos[0], applePos[1]);
 		for(int i = 0; i < *lengthPointer; i++)
 		{	
-			mvprintw(maxY, 0, "%d:(%d, %d) ", i, snakePos[i][0], snakePos[i][1]); //BOTTOM
+			mvprintw(maxY - 1, 0, "%d:(%d, %d) ", i, snakePos[i][0], snakePos[i][1]); 
 		}
+
+		mvprintw(maxY, 0, "Current Snake Length: %d", *lengthPointer);
+
 		refresh();
 	}
-	flushinp(); //flush unprocessed inputs from repeated keystrokes
+}
+
+char* setMovement(int snakeDir[2], int controls[8])
+{ // L R S , D U S
+	int key = getch();
+	if(key == controls[0] || key == controls[4])
+	{
+		snakeDir[0] = 0;
+		snakeDir[1] = 1;
+		return "UP   ";
+	}
+	else if(key == controls[1] || key == controls[5])
+	{
+		snakeDir[0] = -1;
+		snakeDir[1] = 0;
+		return "LEFT ";
+	}
+	else if(key == controls[2] || key == controls[6])
+	{
+		snakeDir[0] = 0;
+		snakeDir[1] = -1;
+		return "DOWN ";
+	}
+	else if(key == controls[3] || key == controls[7])
+	{
+		snakeDir[0] = 1;
+		snakeDir[1] = 0;
+		return "RIGHT";
+	}
 }
 
 //
@@ -150,7 +173,7 @@ int main(int *argc, char **argv)
 	
 	//DEBUG
 	bool isDebugEnabled = false;
-	bool *debugStatPoint = &isDebugEnabled;
+	bool *debugStatusPointer = &isDebugEnabled;
 	int debugKey = KEY_F(3);
 
 	initscr(); //activate curses mode
@@ -160,21 +183,29 @@ int main(int *argc, char **argv)
 	nodelay(stdscr, TRUE);
 
 	placeApple(applePos, snakePos, lengthPointer, screenSize);
+	
+	int snakeDir[2] = {-1, 0}; // X: -1 = LEFT, 1 = RIGHT, 0 = STATIONARY
+								// Y: -1 = DOWN, 1 = UP, 0 = STATIONARY
+
+	int controls[8] = {'w', 'a', 's', 'd', KEY_UP, KEY_LEFT, KEY_DOWN, KEY_RIGHT};
+
 	while(gameLoopActive)
 	{
 		clock_t frameStart = clock();
-		placeApple(applePos, snakePos, lengthPointer, screenSize);
 
 		updateGameState(isFirstRun);
 		
 		printGrid(applePos, snakePos, screenSize, charArray, lengthPointer);
-	
-		checkDebugKey(debugKey, debugStatPoint, applePos, snakePos, lengthPointer);
+		char *direction = calloc(1, 5 * sizeof(char));
+	//	direction = setMovement(snakeDir, controls);
+
+		checkDebugKey(debugKey, debugStatusPointer);
+		writeDebugMenu(debugStatusPointer, applePos, snakePos, lengthPointer, direction);
 		
+		free(direction);
+
+		flushinp(); //flush unprocessed inputs from repeated keystrokes
 		delayUntilNextFrame(frameStart, framesPerSecond);
-		
-		//printCurrentSnake(snakePos, lengthPointer);
-		//printf("~\n");
 		clear();
 		refresh();
 	}
