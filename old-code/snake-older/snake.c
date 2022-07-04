@@ -65,7 +65,7 @@ void delayUntilNextFrame(clock_t frameStart, int framesPerSecond)
 	#else
 			usleep(1000 * milliDelay); //usleep uses microseconds
 	#endif
-}
+} //the above function doesn't even do what it's supposed to do
 
 //
 
@@ -141,7 +141,7 @@ void setMovement(int snakeDir[2], int controls[8])
 //BEGIN PROGRAM
 //
 
-int main(int *argc, char **argv)
+int main(int argc, char **argv)
 {
 	srand(time(NULL)); //init random seed based on UNIX time
 
