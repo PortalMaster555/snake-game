@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <ncurses.h>
 
+#include "snakelib.h"
+
 int main(int argc, char **argv)
 {
-	initscr();
-	cbreak();
-	keypad(stdscr, TRUE);
-	noecho();
-	//nodelay(stdscr, TRUE);
+	initCursesEnv();
 
 	printw("Hello, world!\n");
 	getch();
