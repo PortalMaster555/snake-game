@@ -1,4 +1,5 @@
 #include <ncurses.h>
+#include <unistd.h>
 
 void initCursesEnv(void)
 {
@@ -7,4 +8,9 @@ void initCursesEnv(void)
     keypad(stdscr, TRUE);
     noecho();
     //nodelay(stdscr, TRUE);
+}
+
+void delay(int millis)
+{
+	usleep(millis * 1000);
 }
