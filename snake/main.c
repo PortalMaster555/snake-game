@@ -3,6 +3,15 @@
 
 int main(int argc, char **argv)
 {
-	printf("Hello, world!\n");
+	initscr();
+	cbreak();
+	keypad(stdscr, TRUE);
+	noecho();
+	//nodelay(stdscr, TRUE);
+
+	printw("Hello, world!\n");
+	getch();
+
+	endwin();
 	return 0;
 }
