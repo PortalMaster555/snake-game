@@ -2,20 +2,17 @@
 #include <ncurses.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <time.h>
 
 #include "snakelib.h"
 
 int main(int argc, char **argv)
 {
-	time_t t;
-	srand((unsigned) time(&t)); //seeds random number generator with Epoch time
-
 	initCursesEnv(); //boilerplate stuff to get ncurses to work
 
 	grid gameGrid = {SCREEN_SIZE, SCREEN_SIZE}; // alter definition if needed
 	snake snake = initSnake(SCREEN_SIZE/2, SCREEN_SIZE/2);
-	apple apple = initApple(snake);
+	
+	apple apple;
 
 	int isGameplay = 1;
 	while(isGameplay) //main game loop

@@ -9,8 +9,23 @@ typedef struct
 	int ydim;
 } grid;
 
+typedef struct
+{
+	int *xPtr;
+	int *yPtr;
+	int length;
+	char direction;
+} snake;
+
+typedef struct
+{
+	int x;
+	int y;
+} apple;
+
 void initCursesEnv(void);
 void delay(int millis);
 void printGrid(grid grid);
-
+snake initSnake(int startX, int startY);
+void initApple(snake snake);
 #endif

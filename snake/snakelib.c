@@ -2,6 +2,7 @@
 
 #include <ncurses.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 void initCursesEnv(void)
 {
@@ -26,4 +27,21 @@ void printGrid(grid grid)
 			mvprintw(y, x * 2, "+"); //x * 2 balances with line height
 		}
 	}
+}
+
+snake initSnake(int startX, int startY)
+{
+	snake snake;
+	snake.xPtr = malloc(sizeof(int));
+	*snake.xPtr = startX;
+	snake.yPtr = malloc(sizeof(int));
+	*snake.yPtr = startY;
+	snake.length = 1;
+	snake.direction = 'L';
+	return snake;
+}
+
+void initApple(snake snake)
+{
+	
 }
