@@ -41,7 +41,15 @@ snake initSnake(int startX, int startY)
 	return snake;
 }
 
-void initApple(snake snake)
+apple initApple(snake snake)
 {
+	apple apple;
+	do
+	{
+		apple.x = rand() % SCREEN_SIZE;
+		apple.y = rand() % SCREEN_SIZE;
+	}
+	while(apple.x == *snake.xPtr && apple.y == *snake.yPtr);
+	mvprintw(14,14,"%d, %d", apple.x, apple.y);
 	
 }

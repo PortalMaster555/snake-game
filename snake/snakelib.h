@@ -27,5 +27,5 @@ void initCursesEnv(void);
 void delay(int millis);
 void printGrid(grid grid);
 snake initSnake(int startX, int startY);
-void initApple(snake snake);
+apple initApple(snake snake);
 #endif
