@@ -50,6 +50,5 @@ apple initApple(snake snake)
 		apple.y = rand() % SCREEN_SIZE;
 	}
 	while(apple.x == *snake.xPtr && apple.y == *snake.yPtr);
-	mvprintw(14,14,"%d, %d", apple.x, apple.y);
-	
+	return apple;
 }
