@@ -22,6 +22,7 @@ int main(int argc, char **argv)
 	int isGameplay = 1;
 	while(isGameplay) //main game loop
 	{
+		apple = initApple(gameGrid, snake);
 		printGrid(gameGrid, snake, apple);
 		
 		refresh();
