@@ -2,9 +2,11 @@
 #include <ncurses.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <time.h>
+#include <time.h> //to seed random number gen
 
 #include "snakelib.h"
+
+char gameChars[4] = "+Oo@"; //im too lazy to type out the chars in an array
 
 int main(int argc, char **argv)
 {
@@ -20,7 +22,7 @@ int main(int argc, char **argv)
 	int isGameplay = 1;
 	while(isGameplay) //main game loop
 	{
-		printGrid(gameGrid);
+		printGrid(gameGrid, snake, apple);
 		
 		refresh();
 		delay(1000); //1 second plus calculation time per frame, because implementing the necessary code to make a frame a fixed length of time is beyond the scope of this project

@@ -4,6 +4,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+
+extern char gameChars[4];
+
 void initCursesEnv(void)
 {
 	initscr();
@@ -18,13 +21,30 @@ void delay(int millis)
 	usleep(millis * 1000);
 }
 
-void printGrid(grid grid)
+void printGrid(grid grid, snake snake, apple apple)
 {
 	for(int y = 0; y < grid.ydim; y++)
 	{
 		for(int x = 0; x < grid.xdim; x++)
 		{
-			mvprintw(y, x * 2, "+"); //x * 2 balances with line height
+			for(int i = 0; i < (grid.ydim * grid.xdim); i++)
+			{
+				if(x == snake.xPtr[i] && y == snake.yPtr[i])
+				{
+					if(i == 0)
+						mvprintw(y, x * 2, "%c", gameChars[1]);
+					else
+						mvprintw(y, x * 2, "%c", gameChars[2]);
+				}
+				else if(x == apple.x && y == apple.y)
+				{
+					mvprintw(y, x * 2, "%c", gameChars[3]);
+				}
+				else
+				{
+					mvprintw(y, x * 2, "%c", gameChars[0]); //x * 2 balances with line height on my machine
+				}
+			}
 		}
 	}
 }
