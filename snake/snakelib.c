@@ -64,9 +64,11 @@ snake initSnake(int startX, int startY)
 apple initApple(snake snake)
 {
 	apple apple;
-	int i = 0;
+	
+	
+
 	do
-	{
+	{	
 		apple.x = rand() % SCREEN_SIZE;
 		apple.y = rand() % SCREEN_SIZE;
 		//mvprintw(12, 12, "Apple Placement Attempts: %d", ++i);
