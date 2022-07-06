@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 
 	grid gameGrid = {SCREEN_SIZE, SCREEN_SIZE}; // alter definition if needed
 	snake snake = initSnake(SCREEN_SIZE/2, SCREEN_SIZE/2);
-	apple apple = initApple(snake);
+	apple apple = initApple(gameGrid, snake);
 
 	int isGameplay = 1;
 	while(isGameplay) //main game loop

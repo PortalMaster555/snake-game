@@ -61,19 +61,22 @@ snake initSnake(int startX, int startY)
 	return snake;
 }
 
-apple initApple(snake snake)
+apple initApple(grid gameGrid, snake snake)
 {
 	apple apple;
-	
-	
-
-	do
-	{	
-		apple.x = rand() % SCREEN_SIZE;
-		apple.y = rand() % SCREEN_SIZE;
-		//mvprintw(12, 12, "Apple Placement Attempts: %d", ++i);
-		//Keep this for debug menu
+	while(1) //loop until success
+	{
+		apple.x = rand() % gameGrid.xdim;
+		apple.y = rand() % gameGrid.ydim;
+		for(int i = 0; i < snake.length; i++)
+		{
+			if(apple.x == *snake.xPtr && apple.y == *snake.yPtr)
+			{
+				mvprintw(12, 12, "Conflict at snake position %d", i);
+				break;
+			}
+		}
+		return apple; //return only if no conflicts are detected
 	}
-	while(apple.x == *snake.xPtr && apple.y == *snake.yPtr);
-	return apple;
+
 }
