@@ -64,19 +64,26 @@ snake initSnake(int startX, int startY)
 apple initApple(grid gameGrid, snake snake)
 {
 	apple apple;
+	int attempts = 0;
 	while(1) //loop until success
 	{
+		char isConflict = 0;
 		apple.x = rand() % gameGrid.xdim;
 		apple.y = rand() % gameGrid.ydim;
+
 		for(int i = 0; i < snake.length; i++)
 		{
 			if(apple.x == *snake.xPtr && apple.y == *snake.yPtr)
 			{
-				mvprintw(12, 12, "Conflict at snake position %d", i);
+				isConflict = 1;
+				//mvprintw(12 + attempts, 12 + attempts, "CLANG!");	
 				break;
 			}
 		}
-		return apple; //return only if no conflicts are detected
+		if(!isConflict)
+		{
+			return apple; //return if no conflicts
+		}
 	}
 
 }
