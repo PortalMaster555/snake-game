@@ -1,7 +1,7 @@
 #ifndef SNAKELIB_DOT_H
 #define SNAKELIB_DOT_H
 
-#define SCREEN_SIZE 11
+#define SCREEN_SIZE 2
 
 typedef struct 
 {

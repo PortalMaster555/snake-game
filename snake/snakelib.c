@@ -27,7 +27,7 @@ void printGrid(grid grid, snake snake, apple apple)
 	{
 		for(int x = 0; x < grid.xdim; x++)
 		{
-			for(int i = 0; i < (grid.ydim * grid.xdim); i++)
+			for(int i = 0; i < (snake.length); i++)
 			{
 				if(x == snake.xPtr[i] && y == snake.yPtr[i])
 				{
@@ -46,7 +46,7 @@ void printGrid(grid grid, snake snake, apple apple)
 				}
 			}
 		}
-	}
+	} 
 }
 
 snake initSnake(int startX, int startY)
@@ -64,10 +64,13 @@ snake initSnake(int startX, int startY)
 apple initApple(snake snake)
 {
 	apple apple;
+	int i = 0;
 	do
 	{
 		apple.x = rand() % SCREEN_SIZE;
 		apple.y = rand() % SCREEN_SIZE;
+		//mvprintw(12, 12, "Apple Placement Attempts: %d", ++i);
+		//Keep this for debug menu
 	}
 	while(apple.x == *snake.xPtr && apple.y == *snake.yPtr);
 	return apple;
