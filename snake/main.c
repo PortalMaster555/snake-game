@@ -20,9 +20,15 @@ int main(int argc, char **argv)
 	apple apple = initApple(gameGrid, snake);
 
 	int isGameplay = 1;
-	while(isGameplay) //main game loop
+	//while(checkGameOver) //main game loop
 	{
-		apple = initApple(gameGrid, snake);
+		//moveSnake();
+
+		//checkAppleCollisions();
+		//displayScore();
+		//displayDebug()
+		//takeInput();
+
 		printGrid(gameGrid, snake, apple);
 		
 		refresh();
