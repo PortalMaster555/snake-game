@@ -87,3 +87,29 @@ apple initApple(grid gameGrid, snake snake)
 	}
 
 }
+
+int checkGameOver(grid grid, snake snake)
+{
+	return 0;
+}
+
+snake moveSnake(snake snake)
+{	 
+	switch(snake.direction)
+	{ //NOTE: this approach only moves the head.
+		case 'U':
+			*snake.yPtr--; // right and down +
+			break;
+		case 'L':
+			*snake.xPtr--;
+			mvprintw(15, 15, "MVLEFT");
+			break;
+		case 'D':
+			*snake.yPtr++;
+			break;
+		case 'R':
+			*snake.xPtr++;
+			break;
+	}
+	return snake;
+}

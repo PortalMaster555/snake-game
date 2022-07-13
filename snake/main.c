@@ -19,22 +19,20 @@ int main(int argc, char **argv)
 	snake snake = initSnake(SCREEN_SIZE/2, SCREEN_SIZE/2);
 	apple apple = initApple(gameGrid, snake);
 
-	int isGameplay = 1;
-	//while(checkGameOver) //main game loop
+	while(1) //main game loop
 	{
-		//moveSnake();
-
+		refresh();
+		mvprintw(14, 14, "%c", snake.direction);
+		snake = moveSnake(snake);
+			
 		//checkAppleCollisions();
 		//displayScore();
 		//displayDebug()
-		//takeInput();
-
-		printGrid(gameGrid, snake, apple);
-		
-		refresh();
+		//printGrid(gameGrid, snake, apple);
+//		takeInput();
 		delay(1000); //1 second plus calculation time per frame, because implementing the necessary code to make a frame a fixed length of time is beyond the scope of this project
 	}	
-
+	mvprintw(5, 5, "~~You lose!~~");
 	getch();
 	endwin();
 	return 0;
