@@ -33,7 +33,7 @@ apple initApple(grid grid, snake snake);
 
 int checkGameOver(grid grid, snake snake);
 
-snake moveSnake(snake snake);
-
+snake snakeGrow(snake snake);
+snake snakeShift(snake snake);
 
 #endif

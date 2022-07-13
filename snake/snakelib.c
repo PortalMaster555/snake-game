@@ -29,6 +29,7 @@ void printGrid(grid grid, snake snake, apple apple)
 		{
 			for(int i = 0; i < (snake.length); i++)
 			{
+				mvprintw(16 + i, 16, "%d", i);
 				if(x == snake.xPtr[i] && y == snake.yPtr[i])
 				{
 					if(i == 0)
@@ -93,22 +94,45 @@ int checkGameOver(grid grid, snake snake)
 	return 0;
 }
 
-snake moveSnake(snake snake)
-{	 
+snake snakeGrow(snake snake)
+{
+
+
+	for(int i = 0; i < snake.length; i++)
+	{
+		mvprintw(12 + i, 12, "%d, %d", snake.xPtr[i], snake.yPtr[i]);
+	}
+
+
+	snake.length++;
+	snake.xPtr = realloc(snake.xPtr, snake.length * sizeof(int));
+	snake.xPtr[snake.length - 1] = 0;
+	snake.yPtr = realloc(snake.yPtr, snake.length * sizeof(int));
+	snake.yPtr[snake.length - 1] = 0;
+	return snake;
+}
+
+snake snakeShift(snake snake)
+{
+	for(int i = 0; i < snake.length - 1; i++)
+	{
+		snake.xPtr[i + 1] = snake.xPtr[i];
+		snake.yPtr[i + 1] = snake.yPtr[i];
+	}
+
 	switch(snake.direction)
-	{ //NOTE: this approach only moves the head.
+	{
 		case 'U':
-			*snake.yPtr--; // right and down +
+			(*snake.yPtr)--;
 			break;
 		case 'L':
-			*snake.xPtr--;
-			mvprintw(15, 15, "MVLEFT");
+			(*snake.xPtr)--;
 			break;
 		case 'D':
-			*snake.yPtr++;
+			(*snake.yPtr)++;
 			break;
 		case 'R':
-			*snake.xPtr++;
+			(*snake.xPtr)++;
 			break;
 	}
 	return snake;
