@@ -74,7 +74,6 @@ apple initApple(grid gameGrid, snake snake)
 			if(apple.x == *snake.xPtr && apple.y == *snake.yPtr)
 			{
 				isConflict = 1;
-				//mvprintw(12 + attempts, 12 + attempts, "CLANG!");	
 				break;
 			}
 		}
@@ -179,27 +178,24 @@ char takeInput(char isDebugEnabled, snake snake)
 	}
 }
 
-void printDebug(char input, char isDebugEnabled, snake snake)
+void printDebug(char input, char isDebugEnabled, snake snake, apple apple)
 {
     if(isDebugEnabled) //DEBUG MENU
     {
-		mvprintw(15, 5, "Debug is enabled!");
+		mvprintw(15, 5, "~~DEBUG MENU~~");
 		for(int i = 0; i < snake.length; i++)
         {
-			mvprintw(16 + i, 5, "X: %d, Y: %d", snake.xPtr[i], snake.yPtr[i]);
+			mvprintw(17 + i, 5, "X: %d, Y: %d", snake.xPtr[i], snake.yPtr[i]);
     	}
+		mvprintw(16, 5, "Apple X: %d, Apple Y: %d", apple.x, apple.y);
     }
 }
 
-apple checkAppleCollisions(int *score, snake snake, apple apple, grid grid)
+int checkAppleCollisions(snake snake, apple apple)
 {
-	for(int i = 0; i < snake.length; i++)
+	if(*snake.xPtr == apple.x && *snake.yPtr == apple.y)
 	{
-		if(*snake.xPtr == apple.x && *snake.yPtr == apple.y)
-		{
-			(*score)++;
-			apple = initApple(grid, snake);
-		}
+		return 1;
 	}
-	return apple;
+	return 0;
 }

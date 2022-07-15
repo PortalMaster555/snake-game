@@ -37,7 +37,7 @@ snake snakeGrow(snake snake);
 snake snakeShift(snake snake, grid grid);
 
 char takeInput(char isDebugEnabled, snake snake);
-void printDebug(char input, char isDebugEnabled, snake snake);
+void printDebug(char input, char isDebugEnabled, snake snake, apple apple);
 
-apple checkAppleCollisions(int *score, snake snake, apple apple, grid grid);
+int checkAppleCollisions(snake snake, apple apple);
 #endif
