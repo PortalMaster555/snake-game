@@ -24,7 +24,8 @@ int main(int argc, char **argv)
 	while(1) //main game loop
 	{
 		if(!isFirstFrame) //easiest way i see to make snake not move on fr. 1
-			snake = snakeShift(snake);
+	//		snake = snakeShift(snake);
+			;
 		else
 			isFirstFrame = 0;
 		

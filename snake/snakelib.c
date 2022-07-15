@@ -29,7 +29,6 @@ void printGrid(grid grid, snake snake, apple apple)
 		{
 			for(int i = 0; i < (snake.length); i++)
 			{
-				mvprintw(16 + i, 16, "%d", i);
 				if(x == snake.xPtr[i] && y == snake.yPtr[i])
 				{
 					if(i == 0)
@@ -96,15 +95,12 @@ int checkGameOver(grid grid, snake snake)
 
 snake snakeGrow(snake snake)
 {
-
-
 	for(int i = 0; i < snake.length; i++)
 	{
 		mvprintw(12 + i, 12, "%d, %d", snake.xPtr[i], snake.yPtr[i]);
 	}
 
-
-	snake.length++;
+	//snake.length++;
 	snake.xPtr = realloc(snake.xPtr, snake.length * sizeof(int));
 	snake.xPtr[snake.length - 1] = 0;
 	snake.yPtr = realloc(snake.yPtr, snake.length * sizeof(int));
