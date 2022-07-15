@@ -103,7 +103,6 @@ snake snakeGrow(snake snake)
 
 snake snakeShift(snake snake)
 {
-	//for(int i = 1; i < snake.length; i++)
 	for(int i = snake.length; i > 0; i--)	
 	{
 		snake.xPtr[i] = snake.xPtr[i - 1];
@@ -128,6 +127,7 @@ snake snakeShift(snake snake)
 	return snake;
 }
 
+
 char takeInput(char isDebugEnabled)
 {
 	int ch;
@@ -137,22 +137,20 @@ char takeInput(char isDebugEnabled)
 	{
 		case 'w': case KEY_UP:
 			mvprintw(11, 3, "UP");
-			break;
+			return 'U';
 		case 'a': case KEY_LEFT:
 			mvprintw(11, 3, "LEFT");
-			break;
+			return 'L';
 		case 's': case KEY_DOWN:
 			mvprintw(11, 3, "DOWN");
-			break;
+			return 'D';
 		case 'd': case KEY_RIGHT:
 			mvprintw(11, 3, "RIGHT");
-			break;
+			return 'R';
 		case KEY_F(3):
 			return 'M'; //M for debug [M]enu
-			break;
 		default:
 			return '\0';
-			break;
 	}
 }
 
