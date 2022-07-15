@@ -190,3 +190,16 @@ void printDebug(char input, char isDebugEnabled, snake snake)
     	}
     }
 }
+
+apple checkAppleCollisions(int *score, snake snake, apple apple, grid grid)
+{
+	for(int i = 0; i < snake.length; i++)
+	{
+		if(*snake.xPtr == apple.x && *snake.yPtr == apple.y)
+		{
+			*score++;
+			apple = initApple(grid, snake);
+		}
+	}
+	return apple;
+}

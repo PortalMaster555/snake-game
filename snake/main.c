@@ -22,6 +22,10 @@ int main(int argc, char **argv)
 	int isFirstFrame = 1;
 	char input;
 	char isDebugEnabled = 0;
+	
+	int *score;
+	score = calloc(1, sizeof(int)); //inits score to 0
+	
 	while(1) //main game loop
 	{
 		if(!isFirstFrame) //easiest way i see to make snake not move on fr. 1
@@ -33,10 +37,8 @@ int main(int argc, char **argv)
 
 
 		clear();
-		//checkAppleCollisions();
 		//displayScore();
-	
-			
+		
 		input = takeInput(isDebugEnabled, snake);
 		
 		if(input == 'M')
@@ -46,6 +48,9 @@ int main(int argc, char **argv)
 	
 		snake = snakeShift(snake, gameGrid);	
 
+		apple = checkAppleCollisions(score, snake, apple, gameGrid);
+		
+		mvprintw(11, 1, "SCORE: %d", *score);
 		printGrid(gameGrid, snake, apple);
 
 		printDebug(input, isDebugEnabled, snake);
@@ -57,5 +62,9 @@ int main(int argc, char **argv)
 	mvprintw(5, 5, "~~You lose!~~");
 	getch();
 	endwin();
+
+	free(snake.xPtr);
+	free(snake.yPtr);
+	free(score);
 	return 0;
 }
