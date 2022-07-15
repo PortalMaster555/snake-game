@@ -19,13 +19,14 @@ int main(int argc, char **argv)
 	snake snake = initSnake(SCREEN_SIZE/2, SCREEN_SIZE/2);
 	apple apple = initApple(gameGrid, snake);
 	
-	snake = snakeGrow(snake);
 	int isFirstFrame = 1;
 	while(1) //main game loop
 	{
 		if(!isFirstFrame) //easiest way i see to make snake not move on fr. 1
-	//		snake = snakeShift(snake);
-			;
+		{	
+			snake = snakeGrow(snake);
+			snake = snakeShift(snake);
+		}
 		else
 			isFirstFrame = 0;
 		
@@ -33,6 +34,15 @@ int main(int argc, char **argv)
 		//displayScore();
 		//displayDebug()
 		printGrid(gameGrid, snake, apple);
+
+		
+		for (int i = 0; i < snake.length; i++)
+		{
+			mvprintw(12 + i, 5, "X: %d, Y: %d", snake.xPtr[i], snake.yPtr[i]);
+		}
+
+
+
 //		takeInput();
 
 		refresh();

@@ -27,6 +27,8 @@ void printGrid(grid grid, snake snake, apple apple)
 	{
 		for(int x = 0; x < grid.xdim; x++)
 		{
+			mvprintw(y, x * 2, "%c", gameChars[0]); //x * 2 balances with line height on my machine
+
 			for(int i = 0; i < (snake.length); i++)
 			{
 				if(x == snake.xPtr[i] && y == snake.yPtr[i])
@@ -36,15 +38,13 @@ void printGrid(grid grid, snake snake, apple apple)
 					else
 						mvprintw(y, x * 2, "%c", gameChars[2]);
 				}
-				else if(x == apple.x && y == apple.y)
-				{
-					mvprintw(y, x * 2, "%c", gameChars[3]);
-				}
-				else
-				{
-					mvprintw(y, x * 2, "%c", gameChars[0]); //x * 2 balances with line height on my machine
-				}
+ 			}
+			
+			if(x == apple.x && y == apple.y)
+			{
+				mvprintw(y, x * 2, "%c", gameChars[3]);
 			}
+				
 		}
 	} 
 }
@@ -95,12 +95,7 @@ int checkGameOver(grid grid, snake snake)
 
 snake snakeGrow(snake snake)
 {
-	for(int i = 0; i < snake.length; i++)
-	{
-		mvprintw(12 + i, 12, "%d, %d", snake.xPtr[i], snake.yPtr[i]);
-	}
-
-	//snake.length++;
+	snake.length++;
 	snake.xPtr = realloc(snake.xPtr, snake.length * sizeof(int));
 	snake.xPtr[snake.length - 1] = 0;
 	snake.yPtr = realloc(snake.yPtr, snake.length * sizeof(int));
