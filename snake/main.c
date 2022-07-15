@@ -34,25 +34,14 @@ int main(int argc, char **argv)
 		clear();
 		//checkAppleCollisions();
 		//displayScore();
-		//displayDebug()
+	
 		printGrid(gameGrid, snake, apple);
-
-		
-		for (int i = 0; i < snake.length; i++)
-		{
-			mvprintw(12 + i, 5, "X: %d, Y: %d", snake.xPtr[i], snake.yPtr[i]);
-		}
-
-
-
+	
 		input = takeInput(isDebugEnabled);
-		
 		if(input == 'M')
 			isDebugEnabled = !isDebugEnabled;
+		printDebug(input, isDebugEnabled, snake);
 
-		if(isDebugEnabled)
-			mvprintw(17, 17, "Debug is enabled!");
-		
 		flushinp(); //prevents stacking of key inputs, only first is considered
 		refresh();
 		delay(1000); //1 second plus calculation time per frame, because implementing the necessary code to make a frame a fixed length of time is beyond the scope of this project	

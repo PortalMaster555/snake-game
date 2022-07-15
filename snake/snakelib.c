@@ -149,6 +149,21 @@ char takeInput(char isDebugEnabled)
 			break;
 		case KEY_F(3):
 			return 'M'; //M for debug [M]enu
+			break;
+		default:
+			return '\0';
+			break;
 	}
 }
 
+void printDebug(char input, char isDebugEnabled, snake snake)
+{
+    if(isDebugEnabled) //DEBUG MENU
+    {
+		mvprintw(15, 5, "Debug is enabled!");
+		for(int i = 0; i < snake.length; i++)
+        {
+			mvprintw(16 + i, 5, "X: %d, Y: %d", snake.xPtr[i], snake.yPtr[i]);
+    	}
+    }
+}

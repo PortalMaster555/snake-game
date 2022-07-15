@@ -37,5 +37,6 @@ snake snakeGrow(snake snake);
 snake snakeShift(snake snake);
 
 char takeInput(char isDebugEnabled);
+void printDebug(char input, char isDebugEnabled, snake snake);
 
 #endif
