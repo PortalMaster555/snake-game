@@ -60,9 +60,8 @@ snake initSnake(int startX, int startY)
 	return snake;
 }
 
-apple initApple(grid gameGrid, snake snake)
+apple initApple(apple apple, grid gameGrid, snake snake)
 {
-	apple apple;
 	while(1) //loop until success
 	{
 		char isConflict = 0;
@@ -71,7 +70,7 @@ apple initApple(grid gameGrid, snake snake)
 
 		for(int i = 0; i < snake.length; i++)
 		{
-			if(apple.x == *snake.xPtr && apple.y == *snake.yPtr)
+			if(apple.x == snake.xPtr[i] && apple.y == snake.yPtr[i])
 			{
 				isConflict = 1;
 				break;
@@ -90,13 +89,13 @@ int checkGameOver(grid grid, snake snake)
 	return 0;
 }
 
-snake snakeGrow(snake snake)
+snake snakeGrow(snake snake, grid grid)
 {
 	snake.length++;
 	snake.xPtr = realloc(snake.xPtr, snake.length * sizeof(int) + 1);
-	snake.xPtr[snake.length - 1] = 0;
+	snake.xPtr[snake.length - 1] = grid.xdim + 1;
 	snake.yPtr = realloc(snake.yPtr, snake.length * sizeof(int) + 1);
-	snake.yPtr[snake.length - 1] = 0;
+	snake.yPtr[snake.length - 1] = grid.ydim + 1;
 	return snake;
 }
 

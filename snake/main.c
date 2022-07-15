@@ -17,13 +17,13 @@ int main(int argc, char **argv)
 
 	grid gameGrid = {SCREEN_SIZE, SCREEN_SIZE}; // alter definition if needed
 	snake snake = initSnake(SCREEN_SIZE/2, SCREEN_SIZE/2);
-	apple apple = initApple(gameGrid, snake);
+	apple apple = initApple(apple, gameGrid, snake);
 	
 	int isFirstFrame = 1;
 	char input;
 	char isDebugEnabled = 0;
 	
-	int score = 0;
+	int score = 1;
 	
 	while(1) //main game loop
 	{
@@ -42,8 +42,8 @@ int main(int argc, char **argv)
 		if(isAppleEaten)
 		{
 			score++;
-			apple = initApple(gameGrid, snake);
-			snake = snakeGrow(snake);
+			snake = snakeGrow(snake, gameGrid);
+			apple = initApple(apple, gameGrid, snake);
 		}
 
 		mvprintw(11, 1, "SCORE: %d", score);
