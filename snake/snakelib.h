@@ -34,7 +34,7 @@ apple initApple(grid grid, snake snake);
 int checkGameOver(grid grid, snake snake);
 
 snake snakeGrow(snake snake);
-snake snakeShift(snake snake);
+snake snakeShift(snake snake, grid grid);
 
 char takeInput(char isDebugEnabled);
 void printDebug(char input, char isDebugEnabled, snake snake);

@@ -44,8 +44,8 @@ int main(int argc, char **argv)
 		else if (input != '\0')
 			snake.direction = input;
 	
-		snake = snakeShift(snake);	
-	
+		snake = snakeShift(snake, gameGrid);	
+
 		printGrid(gameGrid, snake, apple);
 
 		printDebug(input, isDebugEnabled, snake);

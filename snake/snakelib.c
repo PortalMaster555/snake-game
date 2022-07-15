@@ -101,7 +101,7 @@ snake snakeGrow(snake snake)
 	return snake;
 }
 
-snake snakeShift(snake snake)
+snake snakeShift(snake snake, grid grid)
 {
 	for(int i = snake.length; i > 0; i--)	
 	{
@@ -113,15 +113,24 @@ snake snakeShift(snake snake)
 	{
 		case 'U':
 			(*snake.yPtr)--;
+			if(*snake.yPtr < 0)
+				*snake.yPtr = grid.ydim - 1; //LOOP
+				//gameover code can be here in all 4 instead
 			break;
 		case 'L':
 			(*snake.xPtr)--;
+			if(*snake.xPtr < 0)
+				*snake.xPtr = grid.xdim - 1; //LOOP
 			break;
 		case 'D':
 			(*snake.yPtr)++;
+			if(*snake.yPtr >= grid.ydim) //LOOP
+				*snake.yPtr = 0;
 			break;
 		case 'R':
 			(*snake.xPtr)++;
+			if(*snake.xPtr >= grid.ydim) //LOOP
+				*snake.xPtr = 0;
 			break;
 	}
 	return snake;
