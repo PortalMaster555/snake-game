@@ -28,6 +28,11 @@ void printGrid(grid grid, snake snake, apple apple)
 		for(int x = 0; x < grid.xdim; x++)
 		{
 			mvprintw(y, x * 2, "%c", gameChars[0]); //x * 2 balances with line height on my machine
+			
+			if(x == apple.x && y == apple.y)
+			{
+				mvprintw(y, x * 2, "%c", gameChars[3]);
+			}
 
 			for(int i = 0; i < (snake.length); i++)
 			{
@@ -38,13 +43,7 @@ void printGrid(grid grid, snake snake, apple apple)
 					else
 						mvprintw(y, x * 2, "%c", gameChars[2]);
 				}
- 			}
-			
-			if(x == apple.x && y == apple.y)
-			{
-				mvprintw(y, x * 2, "%c", gameChars[3]);
-			}
-				
+ 			}						
 		}
 	} 
 }
@@ -105,10 +104,10 @@ snake snakeGrow(snake snake)
 
 snake snakeShift(snake snake)
 {
-	for(int i = 0; i < snake.length - 1; i++)
+	for(int i = 1; i < snake.length; i++)
 	{
-		snake.xPtr[i + 1] = snake.xPtr[i];
-		snake.yPtr[i + 1] = snake.yPtr[i];
+		snake.xPtr[i] = snake.xPtr[i - 1];
+		snake.yPtr[i] = snake.yPtr[i - 1];
 	}
 
 	switch(snake.direction)
