@@ -4,7 +4,7 @@ SHELVED:
 
 *make snake growing make a lot more sense than it currently does
 	//initialize to coordinates off screen?
-
+*allow for a change in input when reversal is attempted
 
 
 DONE:
@@ -24,17 +24,19 @@ DONE:
 	//key is F3
 *impliment changes in direction
 *add looping
+*make reversing impossible
+	//if a reversal is attempted, the frame is skipped, as the only obvious way to allow repeats are while() loops and goto statements.
+	//both of those are not very useful here, as gotos are evil and the while would sit forever and waste time if no correction is attempted.
+
 
 
 TO-DO:
 
-*make reversing impossible
 *add detection of apple collision and increment score
 	//make snake grow after = behaves properly
 *display score
 *add gameover detection
-	//if looping is a thing, then the only case would be when
-	//the snake head is in the same position as a body part
+	//if looping is a thing, then the only case would be when the snake head is in the same position as a body part
 *allow for repeated play after gameover
 *store high score to a local file
 *read high score when executing program
