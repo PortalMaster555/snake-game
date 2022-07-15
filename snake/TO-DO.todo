@@ -19,12 +19,12 @@ DONE:
 *grow snake
 *move snake in a direction
 *shift snake coords so the snake "crawls" along prev path
+*impliment keyboard input
 
 
 
 TO-DO:
 
-*impliment keyboard input
 *impliment changes in direction
 *add looping
 *add detection of apple collision and increment score
