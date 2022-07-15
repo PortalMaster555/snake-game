@@ -197,7 +197,7 @@ apple checkAppleCollisions(int *score, snake snake, apple apple, grid grid)
 	{
 		if(*snake.xPtr == apple.x && *snake.yPtr == apple.y)
 		{
-			*score++;
+			(*score)++;
 			apple = initApple(grid, snake);
 		}
 	}
