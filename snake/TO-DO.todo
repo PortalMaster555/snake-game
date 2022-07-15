@@ -27,13 +27,14 @@ DONE:
 *make reversing impossible
 	//if a reversal is attempted, the frame is skipped, as the only obvious way to allow repeats are while() loops and goto statements.
 	//both of those are not very useful here, as gotos are evil and the while would sit forever and waste time if no correction is attempted.
+*add detection of apple collision and increment score
 
 
 
 TO-DO:
 
-*add detection of apple collision and increment score
-	//make snake grow after = behaves properly
+*actually check for apple generation in snake path for real this time
+*make snake grow after apple eaten, make sure it behaves properly
 *display score
 *add gameover detection
 	//if looping is a thing, then the only case would be when the snake head is in the same position as a body part
