@@ -13,7 +13,7 @@ void initCursesEnv(void)
     cbreak();
     keypad(stdscr, TRUE);
     noecho();
-    //nodelay(stdscr, TRUE);
+    nodelay(stdscr, TRUE);
 }
 
 void delay(int millis)
@@ -128,7 +128,7 @@ snake snakeShift(snake snake)
 	return snake;
 }
 
-void takeInput()
+char takeInput(char isDebugEnabled)
 {
 	int ch;
 	ch = getch();
@@ -147,5 +147,8 @@ void takeInput()
 		case 'd': case KEY_RIGHT:
 			mvprintw(11, 3, "RIGHT");
 			break;
+		case KEY_F(3):
+			return 'M'; //M for debug [M]enu
 	}
 }
+

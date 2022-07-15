@@ -36,6 +36,6 @@ int checkGameOver(grid grid, snake snake);
 snake snakeGrow(snake snake);
 snake snakeShift(snake snake);
 
-void takeInput();
+char takeInput(char isDebugEnabled);
 
 #endif
