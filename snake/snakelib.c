@@ -104,7 +104,8 @@ snake snakeGrow(snake snake)
 
 snake snakeShift(snake snake)
 {
-	for(int i = 1; i < snake.length; i++)
+	//for(int i = 1; i < snake.length; i++)
+	for(int i = snake.length; i > 0; i--)	
 	{
 		snake.xPtr[i] = snake.xPtr[i - 1];
 		snake.yPtr[i] = snake.yPtr[i - 1];
