@@ -22,16 +22,19 @@ int main(int argc, char **argv)
 	int isFirstFrame = 1;
 	char input;
 	char isDebugEnabled = 0;
-	
+		
 	int score = 1;
 	
+	snake.isCollided = 0;
+
 	while(1) //main game loop
 	{
 		clear();
 		
 		input = takeInput(isDebugEnabled, snake);
-		
-		if(input == 'M')
+		if(input == 'G')
+			snake = snakeGrow(snake, gameGrid);
+		else if(input == 'M')
 			isDebugEnabled = !isDebugEnabled;
 		else if (input != '\0')
 			snake.direction = input;
@@ -45,6 +48,10 @@ int main(int argc, char **argv)
 			snake = snakeGrow(snake, gameGrid);
 			apple = initApple(apple, gameGrid, snake);
 		}
+		if(!apple.isPlaceable)
+			break;
+		if(snake.isCollided)
+			break;
 
 		mvprintw(11, 1, "SCORE: %d", score);
 
@@ -56,8 +63,19 @@ int main(int argc, char **argv)
 		refresh();
 		delay(1000); //1 second plus calculation time per frame, because implementing the necessary code to make a frame a fixed length of time is beyond the scope of this project	
 	}	
-	mvprintw(5, 5, "~~You lose!~~");
-	getch();
+	if(snake.isCollided)
+	{
+		clear();
+		mvprintw(gameGrid.xdim/2, gameGrid.ydim/2, "You lose! Your score was %d.", score);
+		refresh();
+	}
+	else
+	{
+		clear();
+		mvprintw(gameGrid.xdim/2, gameGrid.ydim/2, "You win! Your score was %d.", score);
+		refresh();
+	}
+	delay(5000);
 	endwin();
 
 	free(snake.xPtr);

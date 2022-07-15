@@ -62,9 +62,8 @@ snake initSnake(int startX, int startY)
 
 apple initApple(apple apple, grid gameGrid, snake snake)
 {
-	while(1) //loop until success
-	{
-		char isConflict = 0;
+	while(snake.length < gameGrid.xdim * gameGrid.ydim) //loop until success
+	{	apple.isPlaceable = 1;
 		apple.x = rand() % gameGrid.xdim;
 		apple.y = rand() % gameGrid.ydim;
 
@@ -72,16 +71,20 @@ apple initApple(apple apple, grid gameGrid, snake snake)
 		{
 			if(apple.x == snake.xPtr[i] && apple.y == snake.yPtr[i])
 			{
-				isConflict = 1;
+				apple.isPlaceable = 0;
 				break;
 			}
 		}
-		if(!isConflict)
+		if(apple.isPlaceable)
 		{
+			apple.isPlaceable = 1;
 			return apple; //return if no conflicts
 		}
 	}
-
+	clear();
+	mvprintw(gameGrid.xdim/2, gameGrid.ydim/2, "You win!");
+	apple.isPlaceable = 0; //game over
+	return apple;
 }
 
 int checkGameOver(grid grid, snake snake)
@@ -172,6 +175,8 @@ char takeInput(char isDebugEnabled, snake snake)
 			break;
 		case KEY_F(3):
 			return 'M'; //M for debug [M]enu
+		case 'g':
+			return 'G'; //for growing
 		default:
 			return '\0';
 	}
@@ -184,9 +189,10 @@ void printDebug(char input, char isDebugEnabled, snake snake, apple apple)
 		mvprintw(15, 5, "~~DEBUG MENU~~");
 		for(int i = 0; i < snake.length; i++)
         {
-			mvprintw(17 + i, 5, "X: %d, Y: %d", snake.xPtr[i], snake.yPtr[i]);
+			mvprintw(18 + i, 5, "X: %d, Y: %d", snake.xPtr[i], snake.yPtr[i]);
     	}
-		mvprintw(16, 5, "Apple X: %d, Apple Y: %d", apple.x, apple.y);
+		mvprintw(17, 15, "Apple X: %d, Apple Y: %d", apple.x, apple.y);
+		mvprintw(16, 10, "Snake length: %d", snake.length);
     }
 }
 

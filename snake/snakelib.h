@@ -15,12 +15,14 @@ typedef struct
 	int *yPtr;
 	int length;
 	char direction;
+	char isCollided;
 } snake;
 
 typedef struct
 {
 	int x;
 	int y;
+	char isPlaceable;
 } apple;
 
 
