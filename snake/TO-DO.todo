@@ -23,11 +23,12 @@ DONE:
 *display debug as a separate thing tied to toggle keybind
 	//key is F3
 *impliment changes in direction
+*add looping
 
 
 TO-DO:
 
-*add looping
+*make reversing impossible
 *add detection of apple collision and increment score
 	//make snake grow after = behaves properly
 *display score
