@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 
 
 
-//		takeInput();
+		takeInput();
 
 		refresh();
 		delay(1000); //1 second plus calculation time per frame, because implementing the necessary code to make a frame a fixed length of time is beyond the scope of this project	

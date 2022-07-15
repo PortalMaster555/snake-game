@@ -127,3 +127,25 @@ snake snakeShift(snake snake)
 	}
 	return snake;
 }
+
+void takeInput()
+{
+	int ch;
+	ch = getch();
+	
+	switch(ch)
+	{
+		case 'w': case KEY_UP:
+			mvprintw(11, 3, "UP");
+			break;
+		case 'a': case KEY_LEFT:
+			mvprintw(11, 3, "LEFT");
+			break;
+		case 's': case KEY_DOWN:
+			mvprintw(11, 3, "DOWN");
+			break;
+		case 'd': case KEY_RIGHT:
+			mvprintw(11, 3, "RIGHT");
+			break;
+	}
+}

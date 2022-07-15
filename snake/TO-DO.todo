@@ -1,5 +1,12 @@
 Snake implementation:
 
+SHELVED:
+
+*make snake growing make a lot more sense than it currently does
+	//initialize to coordinates off screen?
+
+
+
 DONE:
 
 *ncurses
@@ -17,8 +24,6 @@ DONE:
 
 TO-DO:
 
-*make snake growing make a lot more sense than it currently does
-	//initialize to coordinates off screen?
 *impliment keyboard input
 *impliment changes in direction
 *add looping
