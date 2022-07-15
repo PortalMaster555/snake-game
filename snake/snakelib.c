@@ -3,7 +3,7 @@
 #include <ncurses.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+#include <string.h> //for memcpy
 
 extern char gameChars[4];
 
@@ -95,6 +95,7 @@ int checkGameOver(grid grid, snake snake)
 snake snakeGrow(snake snake)
 {
 	snake.length++;
+
 	snake.xPtr = realloc(snake.xPtr, snake.length * sizeof(int));
 	snake.xPtr[snake.length - 1] = 0;
 	snake.yPtr = realloc(snake.yPtr, snake.length * sizeof(int));
