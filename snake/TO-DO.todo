@@ -20,7 +20,8 @@ DONE:
 *move snake in a direction
 *shift snake coords so the snake "crawls" along prev path
 *impliment keyboard input
-
+*display debug as a separate thing tied to toggle keybind
+	//key is F3
 
 
 TO-DO:
@@ -30,8 +31,6 @@ TO-DO:
 *add detection of apple collision and increment score
 	//make snake grow after = behaves properly
 *display score
-*display debug as a separate thing tied to toggle keybind
-	//key is F3
 *add gameover detection
 	//if looping is a thing, then the only case would be when
 	//the snake head is in the same position as a body part
