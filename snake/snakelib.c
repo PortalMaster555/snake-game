@@ -137,7 +137,7 @@ snake snakeShift(snake snake, grid grid)
 }
 
 
-char takeInput(char isDebugEnabled)
+char takeInput(char isDebugEnabled, snake snake)
 {
 	int ch;
 	ch = getch();
@@ -145,17 +145,33 @@ char takeInput(char isDebugEnabled)
 	switch(ch)
 	{
 		case 'w': case KEY_UP:
-			mvprintw(11, 3, "UP");
-			return 'U';
+			if(snake.direction != 'D')
+			{
+				mvprintw(11, 3, "UP");
+				return 'U';
+			}
+			break;
 		case 'a': case KEY_LEFT:
-			mvprintw(11, 3, "LEFT");
-			return 'L';
+			if(snake.direction != 'R')
+			{
+				mvprintw(11, 3, "LEFT");
+				return 'L';
+			}
+			break;
 		case 's': case KEY_DOWN:
-			mvprintw(11, 3, "DOWN");
-			return 'D';
+			if(snake.direction != 'U')
+			{
+				mvprintw(11, 3, "DOWN");
+				return 'D';
+			}
+			break;
 		case 'd': case KEY_RIGHT:
-			mvprintw(11, 3, "RIGHT");
-			return 'R';
+			if(snake.direction != 'L')
+			{
+				mvprintw(11, 3, "RIGHT");
+				return 'R';
+			}
+			break;
 		case KEY_F(3):
 			return 'M'; //M for debug [M]enu
 		default:

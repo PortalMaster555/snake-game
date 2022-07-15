@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 		//displayScore();
 	
 			
-		input = takeInput(isDebugEnabled);
+		input = takeInput(isDebugEnabled, snake);
 		
 		if(input == 'M')
 			isDebugEnabled = !isDebugEnabled;
