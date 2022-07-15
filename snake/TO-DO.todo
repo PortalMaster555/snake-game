@@ -1,0 +1,36 @@
+Snake implementation:
+
+DONE:
+
+*ncurses
+*header and source creation
+*delay function
+*print grid of +s
+*randomly select apple coordinates
+*check for snake in apple gen path
+*display snake
+*grow snake
+*move snake in a direction
+*shift snake coords so the snake "crawls" along prev path
+
+
+
+TO-DO:
+
+*make snake growing make a lot more sense than it currently does
+	//initialize to coordinates off screen?
+*impliment keyboard input
+*impliment changes in direction
+*add looping
+*add detection of apple collision and increment score
+	//make snake grow after = behaves properly
+*display score
+*display debug as a separate thing tied to toggle keybind
+	//key is F3
+*add gameover detection
+	//if looping is a thing, then the only case would be when
+	//the snake head is in the same position as a body part
+*allow for repeated play after gameover
+*store high score to a local file
+*read high score when executing program
+
