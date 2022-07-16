@@ -81,8 +81,6 @@ apple initApple(apple apple, grid gameGrid, snake snake)
 			return apple; //return if no conflicts
 		}
 	}
-	clear();
-	mvprintw(gameGrid.xdim/2, gameGrid.ydim/2, "You win!");
 	apple.isPlaceable = 0; //game over
 	return apple;
 }
@@ -203,4 +201,14 @@ int checkAppleCollisions(snake snake, apple apple)
 		return 1;
 	}
 	return 0;
+}
+
+snake snakeCheckCollide(snake snake)
+{
+	for(int i = 1; i < snake.length; i++)
+	{
+		if(*snake.xPtr == snake.xPtr[i] && *snake.yPtr == snake.yPtr[i])
+			snake.isCollided = 1;
+	}
+	return snake;
 }

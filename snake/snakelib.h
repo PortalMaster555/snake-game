@@ -42,4 +42,7 @@ char takeInput(char isDebugEnabled, snake snake);
 void printDebug(char input, char isDebugEnabled, snake snake, apple apple);
 
 int checkAppleCollisions(snake snake, apple apple);
+
+snake snakeCheckCollide(snake snake);
+
 #endif

@@ -48,12 +48,13 @@ int main(int argc, char **argv)
 			snake = snakeGrow(snake, gameGrid);
 			apple = initApple(apple, gameGrid, snake);
 		}
+		snake = snakeCheckCollide(snake);
 		if(!apple.isPlaceable)
 			break;
 		if(snake.isCollided)
 			break;
 
-		mvprintw(11, 1, "SCORE: %d", score);
+		mvprintw(gameGrid.ydim + 1, 1, "SCORE: %d", score);
 
 		printGrid(gameGrid, snake, apple);
 
