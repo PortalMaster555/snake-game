@@ -32,13 +32,12 @@ DONE:
 *make snake growing make a lot more sense than it currently does
 	//initialize to coordinates off screen?
 *actually check for apple generation in snake path for real this time
-
-
-
-TO-DO:
-
 *add gameover detection
 	//if looping is a thing, then the only case would be when the snake head is in the same position as a body part
 *store high score to a local file
 *read high score when executing program
+
+
+
+TO-DO:
 

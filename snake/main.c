@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <time.h> //to seed random number gen
+#include <string.h> //for writing to files
 
 #include "snakelib.h"
 
@@ -27,6 +28,23 @@ int main(int argc, char **argv)
 	
 	snake.isCollided = 0;
 
+	FILE *highScoreFile;
+	
+	highScoreFile = fopen("high.txt", "r+");
+	if(!highScoreFile)
+		highScoreFile = fopen("high.txt", "w+");
+	int highScore = 0;
+	char highScoreBuffer[5]; //a score of over 99999 is a bit large
+	
+	int j = 0;
+	char c = fgetc(highScoreFile);
+	while(c != EOF)
+	{
+		highScoreBuffer[j++] = c;
+		c = fgetc(highScoreFile);
+	}
+	highScore = atoi(highScoreBuffer);
+	
 	while(1) //main game loop
 	{
 		clear();
@@ -55,7 +73,7 @@ int main(int argc, char **argv)
 			break;
 
 		mvprintw(gameGrid.ydim + 1, 1, "SCORE: %d", score);
-
+		mvprintw(gameGrid.ydim + 2, 1, "HIGH SCORE: %d", highScore);
 		printGrid(gameGrid, snake, apple);
 
 		printDebug(input, isDebugEnabled, snake, apple);
@@ -76,10 +94,23 @@ int main(int argc, char **argv)
 		mvprintw(gameGrid.xdim/2, gameGrid.ydim/2, "You win! Your score was %d.", score);
 		refresh();
 	}
-	delay(5000);
+	delay(3000);
 	endwin();
+
 
 	free(snake.xPtr);
 	free(snake.yPtr);
+	fclose(highScoreFile);
+
+	if(score > highScore)
+	{
+		highScoreFile = fopen("high.txt", "w+");
+		sprintf(highScoreBuffer, "%d", score);
+		fputs(highScoreBuffer, highScoreFile);
+		fclose(highScoreFile);
+	}
+	delay(1000);
+	
+
 	return 0;
 }
